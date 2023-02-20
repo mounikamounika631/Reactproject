@@ -21,13 +21,7 @@ let ls = localStorage.getItem("courses")
 
   let local =ls ? JSON.parse(ls):[]
 
-export let deleteData=(index)=>
-{
-   
-    
-    local.splice(index,1)
-    localStorage.setItem("courses",JSON.stringify(local))
-}
+
 
 export default function BasicModal() {
 

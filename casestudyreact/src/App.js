@@ -1,6 +1,7 @@
 
 import './App.css';
 import Appbar1 from './Appbar1';
+import Contextapi from './contextAPI/Context1';
 import ErrorBoundary from './errorboundry.js/ErrorBoundary';
 import First from './errorboundry.js/First';
 import First1 from './fetchingapi/First1';
@@ -13,14 +14,16 @@ function App() {
   return (
     <div className="App">
      
-      <Appbar1 />
+      {/* <Appbar1 /> */}
       {/* <UseMemo1 /> */}
       {/* <FirstComponent />
       <SecondComponent /> */}
-      {/* <First1 /> */}
-      {/* <ErrorBoundary>
+      
+      <ErrorBoundary >
+      <First />
+        </ErrorBoundary> 
          
-      </ErrorBoundary> */}
+         {/* <UseMemo1/> */}
 
     </div>
   );

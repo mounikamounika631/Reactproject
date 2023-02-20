@@ -10,8 +10,9 @@ import Paper from '@mui/material/Paper';
 
 import { Button, Container } from 'react-bootstrap';
 import Modal2 from './Modal2';
-import {deleteData} from "./Modal2"
+
 import { useState } from 'react';
+import EditItem from './EditItem';
 
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -46,15 +47,43 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 //   createData('Gingerbread', 356, 16.0, 49, 3.9),
 //  ];
 
-let ls = localStorage.getItem("courses")
 
-let local =ls ? JSON.parse(ls):[]
+
 
 export default function CustomizedTables() {
 
+  const [selectdata, setSelectData] = useState({})
+  const [idx, setIdx] = useState()
+  const [openEdit,setOpenEdit] = useState(false)
+  const [edit, setEdit] = useState({})
+ let passIndex=(index)=>{
+    setIdx(index)
+  }
+   let passData=(courses)=>{
+  setSelectData(courses);
+  }
+
+
+  let ls = localStorage.getItem("courses")
+
+let local =ls ? JSON.parse(ls):[]
+
+let deleteData=(index)=>
+{
+   
+    
+    local.splice(index,1)
+    localStorage.setItem("courses",JSON.stringify(local))
+}
+let modalEditOpen=(data)=>
+{
+  setOpenEdit(true);
+  setEdit(data);
+}
 
   
   return (
+    <div>
     <Container className='model'>
     <TableContainer component={Paper}>
       <Modal2 />
@@ -69,20 +98,30 @@ export default function CustomizedTables() {
          </TableRow>
         </TableHead>
         <TableBody>
-          {local.map((row,index) => (
-            <StyledTableRow key={row.index}>
+          {local.map((courses,index) => (
+            <StyledTableRow key={courses.name}>
               <StyledTableCell component="th" scope="row">
-                {row.name}
+                {courses.name}
               </StyledTableCell>
-              <StyledTableCell align="right">{row.plan}</StyledTableCell>
-              <StyledTableCell align="right">{row.date}</StyledTableCell>
-              <StyledTableCell align="right">{row.price}</StyledTableCell>
-              <StyledTableCell align="right"><Button >edit</Button>&nbsp; <Button onClick={()=>{deleteData(index)}}>delete</Button></StyledTableCell>
+              <StyledTableCell align="right">{courses.plan}</StyledTableCell>
+              <StyledTableCell align="right">{courses.date}</StyledTableCell>
+              <StyledTableCell align="right">{courses.price}</StyledTableCell>
+              <StyledTableCell align="right"><Button onClick={()=>{passData(courses);passIndex(index);modalEditOpen()}} >edit</Button>&nbsp; <Button onClick={()=>{deleteData(index)}}>delete</Button></StyledTableCell>
             </StyledTableRow>
           ))}
         </TableBody>
       </Table>
     </TableContainer>
     </Container>
+    {openEdit&&<EditItem 
+    open={openEdit}
+    setopenedit={setOpenEdit}
+    edit={edit}
+    idx={idx}
+    selectdata={selectdata}
+    />
+
+    }
+    </div>
   );
 }

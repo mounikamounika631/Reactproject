@@ -22,17 +22,28 @@ const style = {
 
 
 
-export default function BasicModal({editModal,setEditModal,idx,selecteddata}) {
+export default function EditItem({setopenedit,open,edit,idx,selectdata}) {
 
-    const[editData,setEditData]=useState(selecteddata)
+  const [editModal, setEditModal] = useState(false)
+  let handleeditopen=()=>setEditModal(true);
+  let handleeditclose=()=>setEditModal(false);
+                     
+    const[editData,setEditData]=useState(selectdata)
 
     useEffect(() => {
-        setEditData({ ...selecteddata });
-      }, [selecteddata]);
+        setEditData({...selectdata});
+      }, [selectdata]);
+
+      let editedData=()=>
+      {
+        let local=JSON.parse(localStorage.getItem("courses"))
+        local[idx]=editData
+        localStorage.setItem("courses",JSON.stringify(local))
+      }
 
        //close the Editmodal
   let closeModal = () => {
-    setEditModal(false);
+    setopenedit(false);
     setEditData({
       name: "",
       plan: "",
@@ -41,12 +52,7 @@ export default function BasicModal({editModal,setEditModal,idx,selecteddata}) {
     });
   };
 
-  let editedData=()=>
-  {
-    let local=JSON.parse(localStorage.getItem("courses"))
-    local[idx]=editData
-    localStorage.setItem("courses",JSON.stringify(local))
-  }
+ 
 
 
 
@@ -63,26 +69,25 @@ export default function BasicModal({editModal,setEditModal,idx,selecteddata}) {
   
   return (
     <div>
-        {/* <Modal
+        <Modal
         open={editModal}
-        onClose={()=>setEditModal}
+        onClose={handleeditclose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description">
             <Box sx={style}>
                 <Typography id="modal-modal-title" variant="h6" component="h2">
                 <p>Are you sure you want to submit the data</p>
-                <Button > yes</Button>
-                <Button> No</Button>
+                <Button onClick={()=>{editedData();closeModal()}} > yes</Button>
+                <Button onClick={handleeditclose}> No</Button>
                 </Typography>
 
 
             </Box>
-        </Modal> */}
-      {/* <Button onClick={handleOpen}> Add</Button> */}
-
+        </Modal> 
+       
      <Modal
-        open={editModal}
-        onClose={()=>setEditModal(false)}
+        open={setopenedit}
+        onClose={()=>setopenedit(false)}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
@@ -110,7 +115,7 @@ export default function BasicModal({editModal,setEditModal,idx,selecteddata}) {
       </Form.Group>
       </Form>                   
         </Typography>
-          <Button onClick={editedData}>Edit</Button>
+          <Button onClick={handleeditopen}>Edit</Button>
           <Button onClick={closeModal}>Cancel</Button>
         </Box>
       </Modal>
