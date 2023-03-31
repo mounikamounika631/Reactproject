@@ -14,10 +14,15 @@ import Login from './reactFianlcase/Login';
 import Fetching from './mockquestion/Fetching';
 import UseMemo1 from './usememos/UseMemo1';
 import Practice2 from './usereducer/Practice2';
+import store from './reactRedux/Store'
+import { Provider } from 'react-redux';
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
+    {/* <Provider store={store}>  redux code in index */}
      <App />
+     {/* </Provider> */}
     {/* <Practice1 />
     <First />
     <First1 /> */} 

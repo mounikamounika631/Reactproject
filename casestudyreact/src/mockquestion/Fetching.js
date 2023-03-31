@@ -9,7 +9,8 @@ const [data,setData]=useState([])
 
     let res= async ()=>
     {
-      let result=  await axios.get("https://jsonplaceholder.typicode.com/users")
+       let result=  await axios.get("https://jsonplaceholder.typicode.com/users")
+      // let result=  await axios.get("https://randomuser.me/api/")
       console.log(result.data);
       setData(result.data);
       
@@ -48,7 +49,6 @@ const [data,setData]=useState([])
           <td>{element.name}</td>
           <td>{element.username}</td>
           <td>{element.email}</td>
-          
           <td>{element.phone}</td>
           <td>{element.websites}</td>
         </tr>
